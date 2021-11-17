@@ -15,6 +15,7 @@ import excel from './../src/assets/excel.svg';
 import excelFormat from './../src/assets/format.png'
 import leftArrow from './../src/assets/leftA.png'
 import loadingGif from './../src/assets/loading.jpeg'
+import solanaLogo from './../src/assets/solana.png'
 
 function App() {
 
@@ -397,7 +398,7 @@ function App() {
             </div>
           </div>}
         {!providerPubKey && <div className="landingView">
-          <img src={wave2} alt="" srcset="" />
+          <img src={wave2} alt="" srcset="" className="landingImage" />
           <div className="flex flex-col justify-center align-middle content-center" style={{ height: '100%' }}>
             <div className="heading">
               Airdrop As A Service
@@ -407,6 +408,10 @@ function App() {
             </div>
             <div className="subSubHeading">
               You can airdrop any custom SOLANA SPL token with this service.
+            </div>
+            <div className="solanaLogo">
+            Powered by
+            <img src={solanaLogo} alt="" className="solanaLogo" />
             </div>
           </div>
         </div>
