@@ -26,13 +26,13 @@ LAYOUT.addVariant(
  *  {status: true, signature} //in case of transaction success
  * 
  */
-export const mintTokenToAssociatedAccount = async (wallet, connection, tokensToMint, mintPubkey, associatedAccountPubkey, mintOwner) =>{
+export const mintTokenToAssociatedAccount = async (wallet, connection, tokensToMint, mintPubkey, associatedAccountPubkey, mintOwner, tokenDenomination) =>{
 
     if(!tokensToMint){
         return {status: false, error:"You can't mint 0 tokens"}
     }
-
-    const tokensToMintInLamports = tokensToMint * 1000000000;
+    //tokenDenomination -> default is 9 ie. 1000000000
+    const tokensToMintInLamports = tokensToMint * tokenDenomination;
     const signature = await mintToken({
         connection,
         owner: wallet,

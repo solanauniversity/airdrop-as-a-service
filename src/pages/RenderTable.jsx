@@ -23,7 +23,7 @@ function RenderTable(props){
                       </td>
                     
                       <td className="border border-green-600">
-                        <a href={d.explorer} target="_blank" style={{textDecoration:"underline", color:"blue"}}>Explore</a>
+                        <a href={d.explorer} target="_blank" style={{textDecoration:"underline", color:"#0065ff"}}>Explore</a>
                         </td>
                       
                     </tr>

@@ -14,27 +14,34 @@ import wave2 from './../src/assets/wave2.gif'
 import excel from './../src/assets/excel.svg';
 import excelFormat from './../src/assets/format.png'
 import leftArrow from './../src/assets/leftA.png'
+import loadingGif from './../src/assets/loading.jpeg'
 
 function App() {
 
   const [provider, setProvider] = useState()
   const [providerPubKey, setProviderPub] = useState()
   const [mintKey, setMintKey] = useState()
+  const [denomination, setDenomination] = useState(9)
   const [network, setNetwork] = useState("devnet")
   const [connection, setConnection] = useState()
   const [fileName, setFileName] = useState()
 
   const [rawSheet, setRawSheet] = useState([])
   const [updatedSheet, setUpdatedSheet] = useState([])
+  const [distributionMessage, setDistributionLink ] = useState()
+  const [finalMessage, setFinalMessage] = useState("")
+  const [fileErrorMessage, setFileErrorMessage] = useState("")
   const [dataLength, setDataLength] = useState(0)
 
   const airdropToUserWallet = async (ownerPubkey, tokensToAirdrop) => {
     try {
-      tokensToAirdrop = tokensToAirdrop || 10
+      // tokensToAirdrop = tokensToAirdrop
       const mintPubkey = mintKey || 'Bw94Agu3j5bT89ZnXPAgvPdC5gWVVLxQpud85QZPv1Eb' // mintKey of the token to be minted
-      ownerPubkey = ownerPubkey || '4deyFHL6LG6NYvceo7q2t9Bz66jSjrg8A1BxJH1wAgie' //receiver's Solana wallet address
-
-      const transactionSignature = await createAssociatedAccountFromMintKeyAndMint(connection, provider, new PublicKey(mintPubkey), new PublicKey(ownerPubkey), "", tokensToAirdrop)
+      // ownerPubkey = ownerPubkey //receiver's Solana wallet address
+      const distributionMessage = `https://explorer.solana.com/address/${mintKey}/largest${network === 'devnet' ? '?cluster=devnet':''}`
+      setDistributionLink(distributionMessage)
+      const tokenDenomination = 10 ** denomination
+      const transactionSignature = await createAssociatedAccountFromMintKeyAndMint(connection, provider, new PublicKey(mintPubkey), new PublicKey(ownerPubkey), "", tokensToAirdrop, tokenDenomination)
       console.log(transactionSignature, '-transactionSignature-')
       return transactionSignature
     } catch (err) {
@@ -71,6 +78,28 @@ function App() {
 
   const mintKeyHandler = (e) => {
     setMintKey(e.target.value)
+    setUpdatedSheet([])
+    setDataLength(0)
+    setFinalMessage("")
+  }
+
+  const denominationHandler = (e)=>{
+    e.preventDefault();
+    const {value} = e.target
+      try{
+        const parsed = parseInt(value);
+        if(isNaN(parsed)){
+          throw Error()
+        }
+        if(parsed >= 0 && parsed < 10)
+          setDenomination(parsed)
+        else
+          alert("Enter valid range 1-9")
+      }catch(err){
+        setDenomination("")
+        console.log("Please enter valid number")
+        return
+      }
   }
 
   const connectToWallet = () => {
@@ -96,25 +125,43 @@ function App() {
 
       fileReader.onload = (e) => {
         const bufferArray = e.target.result;
+        try{
+          const wb = XLSX.read(bufferArray, { type: "buffer" });
+          const wsname = wb.SheetNames[0];
 
-        const wb = XLSX.read(bufferArray, { type: "buffer" });
-        const wsname = wb.SheetNames[0];
+          const ws = wb.Sheets[wsname];
 
-        const ws = wb.Sheets[wsname];
+          const data = XLSX.utils.sheet_to_json(ws);
 
-        const data = XLSX.utils.sheet_to_json(ws);
-
-        resolve(data);
+          resolve(data);
+        }catch(err){
+          reject(err);
+        }
       };
 
       fileReader.onerror = (error) => {
         reject(error);
       };
     });
-
-    const data = await promiseResult();
-    setRawSheet(data)
-    toast.info(`Excel successfully parsed`);
+    try{
+      const data = await promiseResult();
+      setRawSheet(data)
+      setUpdatedSheet([])
+      setDataLength(0)
+      setFinalMessage("")
+      setFileErrorMessage("")
+      toast.info(`Excel successfully parsed`);
+    }catch(err){
+      console.log(err,'---err in file parsing---')
+      let errorMessage = `Invalid file error : ${err ? err.name:""}`
+      toast.error(errorMessage);
+      setRawSheet([])
+      setUpdatedSheet([])
+      setDataLength(0)
+      setFinalMessage("")
+      setFileErrorMessage(errorMessage)
+      console.log(err)
+    }
   };
 
   const initiateTheAirdrop = async () => {
@@ -164,12 +211,17 @@ function App() {
       setDataLength(updatedSheet.length);
     }
     console.log("Sheet processing done")
+    let finalMessage= ''
     if(errorCount){
-      toast.info(`Airdrop completed with ${errorCount} errors. Please check`);
+      finalMessage = `Airdrop completed with ${errorCount} errors. Please check`
+      toast.info(finalMessage);
     }else{
-      toast.success(`Airdrop completed`);
+      finalMessage = `Airdrop completed`
+      toast.success(finalMessage);
     }
+    setFinalMessage(finalMessage)
 
+    
   }
 
   const formatPublicKey = (key) => {
@@ -258,6 +310,18 @@ function App() {
                 />
                 {mintKey && (mintKey.length <= 42 || mintKey.length >= 45) && <span style={{ color: "red" }}>Please enter valid mint key</span>}
               </div>
+              <div className="inputWrapper">
+                <label htmlFor="mintKeyInput">Denomination of Token</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={9}
+                  value={denomination}
+                  onChange={denominationHandler}
+                  className="mintKeyInput"
+                />
+                {<span style={{ color: "gray" }}>{`${10**denomination} lamports`}</span>}
+              </div>
               <br />
               <div className="inputWrapper fileWrapper">
                 <div className="wrapped">
@@ -272,6 +336,7 @@ function App() {
                   />
                   <label for="fileInput">choose an excel file</label>
                 </div>
+                {fileErrorMessage && fileErrorMessage.length && <span style={{ color: "red", marginLeft:"100px", top:"190px",position:"absolute" }}>Please upload valid excel file</span>}
                 {<div className="fileName flex-col">
                   {!fileName && <img src={excel} alt="" style={{ width: "200px" }} />}
                   {fileName && <div> <div className="fileNameRow">
@@ -285,25 +350,46 @@ function App() {
 
               </div>
               <br />
-              <button onClick={initiateTheAirdrop} className={`airdropButton ${rawSheet && rawSheet.length && mintKey && (mintKey.length > 42 && mintKey.length < 45) ? 'activeState' : 'disabledState'}`}> Airdrop Tokens </button>
+              <button onClick={initiateTheAirdrop} className={`airdropButton ${rawSheet && rawSheet.length && mintKey && (mintKey.length > 42 && mintKey.length < 45) ? 'activeState' : 'disabledState'} `}> Airdrop Tokens 
+              {updatedSheet.length ? finalMessage.length ? ""  :<img src={loadingGif} alt="" style={{width: '30px',
+    'position': 'absolute',
+    'right': '20px',
+    'top': '14px',
+    
+}}/> :"" } </button>
             </div>
             <div className="flex-3 flex-col flex-grow resultView border border-yellow-400 justify-center ">
               {updatedSheet && updatedSheet.length > 0 && <div> 
                 <div className="exportButton">
+                  {finalMessage && finalMessage.length >0 && <div className="doneMessage" style={{
+                'bottom': 0,
+                'margin-right': '100px',
+                'fontSize': '1em',
+                'color': 'rgb(11 145 82)',
+                'fontWeight': 'bold'}}>
+                    {finalMessage} 
+                  </div>}
+                <div className="distributionLink" style={{ 'marginRight': '30px',
+    'color': '#0065ff',
+    'textDecoration': 'underline'}}>
+                  <a href={distributionMessage} target="_blank">Check token distribution</a>
+                </div>
                  <button onClick={exportToCSV}><img src={excel} alt="" style={{width:"40px"}} /> Export </button> 
                 </div>
 
                 <RenderTable updatedSheet={updatedSheet}></RenderTable>
+                
               </div> 
 }
               {(!updatedSheet || updatedSheet.length < 1) && <div className="excelFormat">
                 <img src={leftArrow} alt="" className="arrow" />
                 <h2>Steps to initiate the Airdrop</h2>
                 <ul style={{ textAlign: "left" }}>
-                  <ol>1. Paste the <strong>Mint Key</strong> of the token which needs to be airdropped.</ol>
-                  <ol>2. Please upload the <strong>excel</strong> in below format only.
+                  <ol>1. Paste the <strong>Mint Key</strong> of the token associated with the logged in wallet.</ol>
+                  <ol>2. Please mention <strong>Denomination in Lamports</strong> of the token. Solana max supports 1-9</ol>
+                  <ol>3. Please upload the <strong>excel</strong> in below format only.
                     <img src={excelFormat} alt="" /></ol>
-                  <ol>3. Click on <strong>Airdrop Token</strong> to initiate the airdrop process.</ol>
+                  <ol>4. Click on <strong>Airdrop Token</strong> to initiate the airdrop process.</ol>
                 </ul>
 
 
