@@ -321,7 +321,7 @@ function App() {
                   onChange={denominationHandler}
                   className="mintKeyInput"
                 />
-                {<span style={{ color: "gray" }}>{`${10**denomination} lamports`}</span>}
+                {<span style={{ color: "gray" }}>{`${10**denomination} Lamports`}</span>}
               </div>
               <br />
               <div className="inputWrapper fileWrapper">
