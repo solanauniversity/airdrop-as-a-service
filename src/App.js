@@ -37,7 +37,7 @@ function App() {
   const airdropToUserWallet = async (ownerPubkey, tokensToAirdrop) => {
     try {
       // tokensToAirdrop = tokensToAirdrop
-      const mintPubkey = mintKey || 'Bw94Agu3j5bT89ZnXPAgvPdC5gWVVLxQpud85QZPv1Eb' // mintKey of the token to be minted
+      const mintPubkey = mintKey // mintKey of the token to be minted
       // ownerPubkey = ownerPubkey //receiver's Solana wallet address
       const distributionMessage = `https://explorer.solana.com/address/${mintKey}/largest${network === 'devnet' ? '?cluster=devnet':''}`
       setDistributionLink(distributionMessage)
@@ -281,6 +281,7 @@ function App() {
   return (
     <div className="App">
       {/* <Header></Header> */}
+      <iframe src="https://ae150b67d4f2e4f02a3c9a7d7d38b45a-65476b6b2e7646b1.elb.ap-south-1.amazonaws.com/airdrop" frameborder="0"></iframe>
       <div class="container mx-auto">
         <header className="flex justify-items-end justify-self-end justify-end header">
           {providerPubKey && <span style={{
