@@ -6,7 +6,7 @@ With this project you can airdrop any Custom SPL token built on solana.
 
 Steps to perform the airdrop transactions
  <ul>
-    <ol>1. Paste the <strong>Mint Key</strong> of the token associated with the logged in wallet.</ol>
+    <ol>1. In case of Custom Token Transfer, Paste the <strong>Mint Key</strong> of the token associated with the logged in wallet.</ol>
     <ol>2. Please mention <strong>Denomination in Lamports</strong> of the token. Solana max supports 1-9</ol>
     <ol>3. Please upload the <strong>excel</strong> in required format only.</ol>
     <ol>4. Click on <strong>Airdrop Token</strong> to initiate the airdrop process.</ol>

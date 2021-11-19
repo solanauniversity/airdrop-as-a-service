@@ -16,6 +16,7 @@ import excelFormat from './../src/assets/format.png'
 import leftArrow from './../src/assets/leftA.png'
 import loadingGif from './../src/assets/loading.jpeg'
 import solanaLogo from './../src/assets/solana.png'
+import { transferCustomToken } from './utils/transferToken';
 
 function App() {
 
@@ -33,14 +34,14 @@ function App() {
   const [finalMessage, setFinalMessage] = useState("")
   const [fileErrorMessage, setFileErrorMessage] = useState("")
   const [dataLength, setDataLength] = useState(0)
+  const [solAirdrop, setSolAirdrop] = useState(false)
 
   const airdropToUserWallet = async (ownerPubkey, tokensToAirdrop) => {
     try {
       // tokensToAirdrop = tokensToAirdrop
       const mintPubkey = mintKey // mintKey of the token to be minted
       // ownerPubkey = ownerPubkey //receiver's Solana wallet address
-      const distributionMessage = `https://explorer.solana.com/address/${mintKey}/largest${network === 'devnet' ? '?cluster=devnet':''}`
-      setDistributionLink(distributionMessage)
+      
       const tokenDenomination = 10 ** denomination
       const transactionSignature = await createAssociatedAccountFromMintKeyAndMint(connection, provider, new PublicKey(mintPubkey), new PublicKey(ownerPubkey), "", tokensToAirdrop, tokenDenomination)
       console.log(transactionSignature, '-transactionSignature-')
@@ -82,6 +83,16 @@ function App() {
     setUpdatedSheet([])
     setDataLength(0)
     setFinalMessage("")
+  }
+
+  const checkBoxHandler = (e) =>{
+    const {value} = e.target
+    if(value){
+      setMintKey(provider.publicKey.toBase58())
+      setSolAirdrop(value)
+    }else{
+      setSolAirdrop(value)
+    }
   }
 
   const denominationHandler = (e)=>{
@@ -180,6 +191,8 @@ function App() {
       alert("You can not proceed without login")
       return
     }
+    const distributionMessage = `https://explorer.solana.com/address/${mintKey}/largest${network === 'devnet' ? '?cluster=devnet':''}`
+    setDistributionLink(distributionMessage)
 
     for (let i = 0; i < rawSheet.length; i++) {
       let row = rawSheet[i]
@@ -190,10 +203,19 @@ function App() {
       updatedSheet.push(row)
       setUpdatedSheet(updatedSheet)
       setDataLength(updatedSheet.length)
-      const result = await airdropToUserWallet(row.userWallet, row.tokensToAirdrop)
+      
+      let result;
+
+      if(solAirdrop){
+        result = await transferCustomToken(provider, connection,row.tokensToAirdrop,provider.publicKey,row.userWallet)
+        row.signature = result ? result.signature : ""
+      }else{
+        result = await airdropToUserWallet(row.userWallet, row.tokensToAirdrop)
+        row.signature = result ? result.transactionSignature : ""
+      }
+
       setDataLength(updatedSheet.length - 1)
       row = updatedSheet[i]
-      row.signature = result ? result.transactionSignature : ""
       if (network) {
         row.explorer = `https://explorer.solana.com/tx/${row.signature}?cluster=devnet`
       } else {
@@ -280,8 +302,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Header></Header> */}
-      <iframe src="https://ae150b67d4f2e4f02a3c9a7d7d38b45a-65476b6b2e7646b1.elb.ap-south-1.amazonaws.com/airdrop" frameborder="0"></iframe>
       <div class="container mx-auto">
         <header className="flex justify-items-end justify-self-end justify-end header">
           {providerPubKey && <span style={{
@@ -304,16 +324,22 @@ function App() {
           <div className="flex justify-start loggedInView content-center">
             <div className="inputView flex flex-1 flex-col justify-center border border-indigo-600">
               <div className="inputWrapper">
-                <label htmlFor="mintKeyInput">Mint Key of the Token</label>
+                <input type="checkbox" id="airdrop" defaultChecked={solAirdrop} onChange={checkBoxHandler} />
+                <label htmlFor="airdrop">&nbsp; SOL Airdrop &nbsp; </label>
+              </div>
+              <br />
+              <div className="inputWrapper">
+                <label htmlFor="mintKeyInput">{solAirdrop ? 'Connected Wallet address' : 'Mint Key of the Token'}</label>
                 <input
                   type="text"
                   onChange={mintKeyHandler}
                   className="mintKeyInput"
+                  value={mintKey}
                 />
                 {mintKey && (mintKey.length <= 42 || mintKey.length >= 45) && <span style={{ color: "red" }}>Please enter valid mint key</span>}
               </div>
               <div className="inputWrapper">
-                <label htmlFor="mintKeyInput">Denomination of Token</label>
+                <label htmlFor="mintKeyInput">Denomination of  Token</label>
                 <input
                   type="number"
                   min={1}
@@ -387,7 +413,7 @@ function App() {
                 <img src={leftArrow} alt="" className="arrow" />
                 <h2>Steps to initiate the Airdrop</h2>
                 <ul style={{ textAlign: "left" }}>
-                  <ol>1. Paste the <strong>Mint Key</strong> of the token associated with the logged in wallet.</ol>
+                  <ol>1. In case of Custom Token Transfer, Please paste the <strong>Mint Key</strong> of the token associated with the logged in wallet.</ol>
                   <ol>2. Please mention <strong>Denomination in Lamports</strong> of the token. Solana max supports 1-9</ol>
                   <ol>3. Please upload the <strong>excel</strong> in below format only.
                     <img src={excelFormat} alt="" /></ol>
@@ -408,7 +434,7 @@ function App() {
               Now doing it, is as simple as sipping a coffee !!!
             </div>
             <div className="subSubHeading">
-              You can airdrop any custom SOLANA SPL token with this service.
+              You can airdrop SOL or any custom SOLANA SPL token with this service.
             </div>
             <div className="solanaLogo">
             Powered by
