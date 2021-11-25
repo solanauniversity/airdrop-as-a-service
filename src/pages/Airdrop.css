@@ -1,0 +1,358 @@
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+.header {
+  width: 100%;
+  height: 6vh;
+  box-shadow: 0px 0px 8px 2px #ccc;
+  background: #fff;
+  margin-bottom: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-right: 20px;
+}
+.solanaLogo {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  align-items: center;
+}
+.solanaLogo img {
+  width: 100px;
+  border-radius: 500px;
+  margin: 0;
+  margin-left: 20px;
+  position: relative !important;
+}
+.landingView {
+  height: 90vh;
+  box-shadow: 0px 0px 8px 2px #ccc;
+  background: #fff;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding-right: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.landingView .flex {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  color: white;
+  margin-top: -40px;
+}
+.landingView .landingImage {
+  width: 100%;
+  position: absolute;
+}
+.landingView .heading {
+  font-size: 8em;
+}
+.landingView .subHeading {
+  font-size: 2em;
+}
+.loginButton {
+  margin-right: 10px;
+  border: 1px solid #35a2ff;
+  border-radius: 5px;
+  height: 30px;
+  padding: 0px 20px;
+  margin-top: 10px;
+  font-weight: 1em;
+}
+.excelFormat {
+  max-width: 500px;
+  text-align: center;
+  margin-top: 80px;
+  margin-left: 20%;
+  position: relative;
+}
+.excelFormat ul ol {
+  margin-bottom: 20px;
+}
+.excelFormat .arrow {
+  position: absolute;
+  top: 40%;
+  width: 50px;
+  left: -30%;
+}
+.excelFormat h2 {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+.singin {
+  background: #35a2ff;
+  color: white;
+}
+
+.inputView {
+  background: #fff;
+  margin: 10px;
+  margin-left: 0;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px 2px #ccc;
+}
+.resultView {
+  background: #fff;
+  margin: 10px;
+  margin-right: 0;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px 2px #ccc;
+  position: relative;
+}
+.resultView .exportButton {
+  display: flex;
+  text-align: right;
+  justify-content: end;
+  padding-right: 12px;
+  margin-top: 20px;
+}
+.resultView .exportButton button {
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #34a2ff;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+.resultView .exportButton button:hover {
+  background: #34a2ff;
+}
+.tableContainer {
+  background: #fff;
+  max-height: 85vh;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: 10px;
+  border-radius: 10px;
+}
+.resultTable {
+  width: 100%;
+  /* height: 100vh; */
+  max-height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.resultTable .loadingCell {
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
+  align-items: center;
+}
+.resultTable .loadingCell img {
+  width: 30px;
+  margin-left: 10px;
+}
+
+/* .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  } */
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.inputWrapper {
+  text-align: left;
+}
+.mintKeyInput {
+  width: 100%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+.mintKeyInput:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+input[type='file'] {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+input[type='file'] + label {
+  background: #73d6a8;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Rubik', sans-serif;
+  font-size: inherit;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  outline: none;
+  padding: 1rem 50px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
+}
+
+[type='file'] + label:hover {
+  background-color: #167247;
+}
+
+.fileWrapper {
+  border: 1px dashed #73d6a8;
+  border-radius: 5px;
+  background: #fefcfc;
+  width: 100%;
+  height: 300px;
+  position: relative;
+}
+.wrapped {
+  position: absolute;
+  bottom: 0;
+  width: 80%;
+  margin-left: 10%;
+}
+.fileName {
+  height: 250px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+}
+.inputView {
+  padding: 1em;
+}
+.airdropButton {
+  width: 100%;
+  padding: 1em;
+  background: #35a2ff;
+  border-radius: 5px;
+  margin-top: 20px;
+  color: white;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+.airdropButton:hover {
+  background: rgb(37, 106, 235);
+}
+
+.airdropButton.disabledState {
+  background: #ddd;
+  cursor: no-drop;
+  pointer-events: none;
+}
+.airdropButton.activeState {
+  background: #35a2ff;
+}
+
+/* select {
+  border: 1px solid rgb(254 247 135);
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 3px;
+  background: rgb(254 247 135);
+  padding: 0 10px;
+} */
+
+/* The container must be positioned relative: */
+.custom-select {
+  position: relative;
+  font-family: Arial;
+  width: 150px;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: '';
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,
+.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 1080px) {
+  .loggedInView {
+    flex-direction: column-reverse;
+  }
+  .landingImage {
+    height: 100%;
+  }
+  .landingView .heading {
+    font-size: 2em;
+  }
+  .landingView .subHeading {
+    font-size: 1.5em;
+  }
+}

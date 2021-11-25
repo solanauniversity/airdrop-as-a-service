@@ -5,6 +5,18 @@ import { Link } from 'react-router-dom';
 function NewHeader() {
   const [offset, setOffset] = useState(0);
   const [screenWidth, setScreenWidth] = useState(1920);
+  const [name, setName] = useState(
+    '3yZSPESErfw2WoPZM1vg9jEfq8qUsnATqZFexnsVy5AG'
+  );
+
+  const formatPublicKey = (key) => {
+    if (!key) {
+      return;
+    }
+    const firstString = key.slice(0, 4);
+    const secondString = key.slice(key.length - 6, key.length);
+    return firstString + '....' + secondString;
+  };
 
   useEffect(() => {
     window.onscroll = () => {
@@ -15,7 +27,7 @@ function NewHeader() {
   }, []);
 
   return (
-    <section className={`fixed-top navigation ${offset > 200 ? 'nav-bg' : ''}`}>
+    <section className={`fixed-top navigation ${offset > 100 ? 'nav-bg' : ''}`}>
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
           <div className="navbar-brand">
@@ -45,11 +57,24 @@ function NewHeader() {
               </li>
 
               <li class="nav-item">
-                <a href="contact.html">Contact</a>
+                <a
+                  href="contact.html"
+                  className="text-indigo-700 font-semibold"
+                >
+                  Welcome {formatPublicKey(name)}
+                </a>
               </li>
+
+              {/* <li class="nav-item">
+                <a href="contact.html">{formatPublicKey(name)}</a>
+              </li> */}
             </ul>
+            <select className="px-3 bg-transparent border-2 rounded-lg border-gray-800 py-1 mr-3">
+              <option>Devnet</option>
+              <option>Mainnet(Beta)</option>
+            </select>
             <a href="#" class="btn btn-primary ml-lg-3 primary-shadow">
-              Login
+              Logout
             </a>
           </div>
         </nav>
