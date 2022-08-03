@@ -5,10 +5,9 @@ function HowItWorks() {
     <section class="process-section spad">
       <div class="container">
         <div class="section-title text-center">
-          <h2>How airdrop as a service works</h2>
+          <h2>How creation of custom SPL token works ?</h2>
           <p>
-            Start learning about Bitcoin with interactive tutorials. It’s fun,
-            easy, and takes only a few minutes!{' '}
+            
           </p>
         </div>
         <div class="row pt-12">
@@ -17,7 +16,7 @@ function HowItWorks() {
               <figure class="process-icon">
                 <img src="images/process-icons/1.png" alt="#" />
               </figure>
-              <h4>Create Your Wallet</h4>
+              <h4>Connect Your Wallet</h4>
               <p>
                 Excepteur sint occaecat cupidatat non proident sunt in culpa qui
                 officia deserunt mollit anim id est laborum.{' '}

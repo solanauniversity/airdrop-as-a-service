@@ -13,16 +13,16 @@ function Explainer() {
           </div>
           <div class="col-md-5">
             <h2 class="section-title">
-              Why we are building asa airdrop as a service!
+              Why Solana University need to exists ? 
             </h2>
             <p>
-              What is the problem asa is aiming to solve.
-              <br />
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Exercitationem modi asperiores autem expedita repudiandae, officia
-              quibusdam laudantium veritatis minima, reiciendis ea deserunt
-              perferendis provident, obcaecati distinctio dignissimos corporis
-              non ab.
+              With the growth of new web3 developers, everyone is 
+              learning and consuming content from multiple platforms.
+              <br></br>
+              <a target="_blank" href="https://www.questbook.app" style={{color:"blue"}} >Questbook</a> is one of the platform where new devs are learning and giving shape to their ideas.
+
+              <br></br>
+              Hence to see all the tutorials in action is never easy, here "Solana University" comes to the rescue.
             </p>
           </div>
         </div>

@@ -26,13 +26,17 @@ function NewHeader() {
     setScreenWidth(width);
   }, []);
 
+  const logoutHandler = () =>{
+    window.solana?.disconnect();
+  }
+
   return (
     <section className={`fixed-top navigation ${offset > 100 ? 'nav-bg' : ''}`}>
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
           <div className="navbar-brand">
             <Link to="/">
-              <h1 class="logo-text">Airdrop</h1>
+              <h2 class="logo-text">Solana University</h2>
             </Link>
           </div>
           <button
@@ -48,13 +52,13 @@ function NewHeader() {
           </button>
           <div class="collapse navbar-collapse text-center" id="navbar">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
+              {/* <li class="nav-item">
                 <Link to="/create">Create a token</Link>
               </li>
 
               <li class="nav-item">
                 <Link to="/airdrop">Airdrop tokens</Link>
-              </li>
+              </li> */}
 
               <li class="nav-item">
                 <a
@@ -73,7 +77,7 @@ function NewHeader() {
               <option>Devnet</option>
               <option>Mainnet(Beta)</option>
             </select>
-            <a href="#" class="btn btn-primary ml-lg-3 primary-shadow">
+            <a href="#" class="btn btn-primary ml-lg-3 primary-shadow" onClick={logoutHandler}>
               Logout
             </a>
           </div>

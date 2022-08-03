@@ -6,12 +6,11 @@ function Features() {
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-title">Awesome Features</h2>
+            <h2 class="section-title">University has following features to offer</h2>
             <p class="mb-100">
+              Each feature is a production ready feature, which can be used for free.
               Airdrop as a service offers two exclusive features which are not
               yet there on the market.
-              <br />
-              Excepteur sint occaecat cupidatat non proident
             </p>
           </div>
           {/* <!-- feature item --> */}
@@ -33,10 +32,9 @@ function Features() {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-center mt-4">Create a token</h4>
+                  <h4 className="text-center mt-4">Create a custom SPL token</h4>
                   <p className="mt-2 text-center">
-                    Airdrop as a service offers you to create your own token
-                    which further can be used to do the airdrop
+                    This feature allows you to create your own <strong>custom SPL</strong> token
                   </p>
                 </div>
               </div>
@@ -56,10 +54,9 @@ function Features() {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-center mt-4">Create a token</h4>
+                  <h4 className="text-center mt-4">Airdrop as a service</h4>
                   <p className="mt-2 text-center">
-                    Airdrop as a service offers you to create your own token
-                    which further can be used to do the airdrop
+                    This feature offers you to do the <strong>airdrop</strong> of your custom SPL token.
                   </p>
                 </div>
               </div>

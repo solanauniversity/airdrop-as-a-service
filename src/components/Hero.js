@@ -12,14 +12,13 @@ function Hero() {
         <div class="row">
           <div class="col-lg-12 text-center zindex-1">
             <h1 class="mb-3">
-              Airdrop
-              <br />
-              as a service
+              University 
+              As A Service
             </h1>
             <p class="mb-4">
-              Now do hassle free aidrops conveniently
+              You will find features built on <b>Solana</b>
               <br />
-              without worrying about to setup the system we take care of that
+              Not only you can learn, you can also use these production ready features freely 
             </p>
             <div className="flex items-center justify-center">
               <p className="mr-4">Powered by</p>
